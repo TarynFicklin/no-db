@@ -18,11 +18,11 @@ class Card extends Component {
     super();
 
     this.state = {
-      temp       : '125',
+      temp       : '72',
       condition  : 'meteorite',
       editCity   : 'provo',
       editState  : 'ut',
-      code       :  3200,
+      code       :  '13',
       background : 'sky'
     };
   }
@@ -232,16 +232,29 @@ class Card extends Component {
 
     return (
 			<div id="card" style={{backgroundImage: `url(${this.state.background})`}}>
+        <div className="wrapper">
+          <div className="top-div">
+            <div className="temp-div">
+              <p className="temp">{temp}°</p>
+            </div>
 
-        <button onClick={() => this.deleteCard()} className="delete button">X</button>
-        <ul>
-          <li className="city">{city}</li>
-          <li className="state">{state}</li>
-          <li className="temp">{temp}°</li>
-          <li className="condition">{condition}</li>
-        </ul>
+            <div className="info-div">
+              <div className="dual-div">
+                <div className="location-div">
+                  <p className="location">{city}, {state}</p>
+                </div>
+                <div className="delete-div">
+                  <button onClick={() => this.deleteCard()} className="delete-button">X</button>
+                </div>
+              </div>
+              <div className="condition-div">
+                <p className="condition">{condition}</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <button onClick={() => this.editCard()}>Edit</button><br/>
+        <button onClick={() => this.editCard()} className="edit-button">Edit</button><br/>
         <input onChange={(e) => this.updateCity (e.target.value)} placeholder="City" className="city-input input" />
         <input onChange={(e) => this.updateState(e.target.value)} placeholder="State" className="state-input input"/>
 			</div>

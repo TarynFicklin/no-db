@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900');
+
 body {
   background: url('https://images7.alphacoders.com/374/374296.jpg');
   background-size: cover;
+  font-family: 'Muli', sans-serif;
 }
 
 .input-area {
