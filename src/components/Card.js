@@ -33,14 +33,14 @@ class Card extends Component {
   componentDidMount() {
 
     this.conditionBackground();
-    // axios.get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${this.props.city}, ${this.props.state}")&format=json`).then((results) => {
-    //   this.setState({
-    //   temp:       results.data.query.results.channel.item.condition.temp,
-    //   condition:  results.data.query.results.channel.item.condition.text,
-    //   code:       results.data.query.results.channel.item.condition.code
-    //   })
-    //   this.conditionBackground();
-    // })
+    axios.get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${this.props.city}, ${this.props.state}")&format=json`).then((results) => {
+      this.setState({
+      temp:       results.data.query.results.channel.item.condition.temp,
+      condition:  results.data.query.results.channel.item.condition.text,
+      code:       results.data.query.results.channel.item.condition.code
+      })
+      this.conditionBackground();
+    })
 
   }
 
@@ -52,14 +52,14 @@ class Card extends Component {
     let city = this.state.editCity;
     let state = this.state.editState;
 
-    // axios.get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${city}, ${state}")&format=json`).then((results) => { 
-    // this.setState({
-    //   temp:       results.data.query.results.channel.item.condition.temp,
-    //   condition:  results.data.query.results.channel.item.condition.text,
-    //   code:       results.data.query.results.channel.item.condition.code
-    //   })
-    //   this.conditionBackground();
-    // })
+    axios.get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${city}, ${state}")&format=json`).then((results) => { 
+    this.setState({
+      temp:       results.data.query.results.channel.item.condition.temp,
+      condition:  results.data.query.results.channel.item.condition.text,
+      code:       results.data.query.results.channel.item.condition.code
+      })
+      this.conditionBackground();
+    })
 
     axios.put(`/api/cards/${this.props.id}`,
     {
@@ -72,6 +72,7 @@ class Card extends Component {
     this.conditionBackground();
     return this.props.updateCardsArr(results.data);
   })
+
   }
 
   updateCity  (val) {this.setState({editCity:  val})}
@@ -232,7 +233,7 @@ class Card extends Component {
 
   render() {
     let { city, state } = this.props;
-    let { temp, condition, code } = this.state;
+    let { temp, condition } = this.state;
 
     return (
 			<div id="card" style={{backgroundImage: `url(${this.state.background})`}}>
