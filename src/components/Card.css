@@ -1,0 +1,56 @@
+* {box-sizing: border-box}
+
+#card {
+	text-transform: uppercase;
+	margin: 10px;
+	border-radius: 5px;
+	background: dodgerblue;
+	background-size: cover;
+
+	width: 400px;
+	height: 200px;
+
+	color: white;
+
+	overflow: hidden;
+
+	box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.25);
+	-webkit-box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 5px 25px 0px rgba(0,0,0,0.25);
+
+	/* display: flex;
+	align-items: center;
+	flex-direction: column; */
+}
+
+#card ul {
+	list-style-type: none;
+}
+
+#card li {
+
+}
+
+input {
+	background: rgba(255,255,255,.5);
+	border: 0;
+	padding: 20px;
+}
+
+.delete {
+	/* border-radius: 200px;
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit; */
+}
+
+.delete:hover {
+}
+
+.input {
+	width: 200px;
+	height: 57px;
+}
