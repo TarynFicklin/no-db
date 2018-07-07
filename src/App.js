@@ -50,17 +50,19 @@ class App extends Component {
           <button onClick={()=>this.add()} className="add-button">+</button>
         </div>
 
-        {cardsArr.map((e, i) => {
-          return (
-            <Card 
-            key={i}
-            id={e.id}
-            city={e.city}
-            state={e.state}
-            updateCardsArr={this.updateCardsArr}
-            />
+        <div className="card-field">
+          {cardsArr.map((e, i) => {
+            return (
+              <Card 
+              key={i}
+              id={e.id}
+              city={e.city}
+              state={e.state}
+              updateCardsArr={this.updateCardsArr}
+              />
+            )}
           )}
-        )}
+        </div>
 
       </div>
     );

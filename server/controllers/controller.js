@@ -1,12 +1,4 @@
-let cardsArr = [
-	{
-		"id"		: -1,
-		"city"      : "provo",
-		"state"     : "ut",
-		"temp"      : "72",
-		"condition" : "sunny"
-	}
-];
+let cardsArr = [];
 
 let id = 0;
 

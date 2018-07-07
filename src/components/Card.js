@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import './Card.css';
 import axios from 'axios';
 
-import drizzle   from '../images/drizzle.png'
-import foggy     from '../images/foggy.png'
-import hot       from '../images/hot.png'
-import meteorite from '../images/meteorite.png'
-import raining   from '../images/raining.png'
-import sky       from '../images/sky.png'
-import snowy     from '../images/snowy.png'
-import stormy    from '../images/stormy.png'
-import sunny     from '../images/sunny.png'
-import windy     from '../images/windy.png'
+import drizzle      from '../images/drizzle.png'
+import foggy        from '../images/foggy.png'
+import hot          from '../images/hot.png'
+import meteorite    from '../images/meteorite.png'
+import mostlyClear  from '../images/mostly-clear.png'
+import mostlyCloudy from '../images/mostly-cloudy.png'
+import partlyCloudy from '../images/partly-cloudy.png'
+import raining      from '../images/raining.png'
+import sky          from '../images/sky.png'
+import snowy        from '../images/snowy.png'
+import stormy       from '../images/stormy.png'
+import sunny        from '../images/sunny.png'
+import windy        from '../images/windy.png'
 
 class Card extends Component {
   constructor() {
@@ -22,7 +25,7 @@ class Card extends Component {
       condition  : 'meteorite',
       editCity   : 'provo',
       editState  : 'ut',
-      code       :  '13',
+      code       : '3200',
       background : 'sky'
     };
   }
@@ -55,6 +58,7 @@ class Card extends Component {
     //   condition:  results.data.query.results.channel.item.condition.text,
     //   code:       results.data.query.results.channel.item.condition.code
     //   })
+    //   this.conditionBackground();
     // })
 
     axios.put(`/api/cards/${this.props.id}`,
@@ -159,13 +163,13 @@ class Card extends Component {
           this.setState({background: sky});
           break;
       case '27':
-          this.setState({background: sky});
+          this.setState({background: mostlyCloudy});
           break;
       case '28':
           this.setState({background: sky});
           break;
       case '29':
-          this.setState({background: sky});
+          this.setState({background: partlyCloudy});
           break;
       case '30':
           this.setState({background: sky});
@@ -174,10 +178,10 @@ class Card extends Component {
           this.setState({background: sunny});
           break;
       case '32':
-          this.setState({background: sunny});
+          this.setState({background: hot});
           break;
       case '33':
-          this.setState({background: sunny});
+          this.setState({background: mostlyClear});
           break;
       case '34':
           this.setState({background: sunny});
@@ -237,14 +241,13 @@ class Card extends Component {
             <div className="temp-div">
               <p className="temp">{temp}°</p>
             </div>
-
             <div className="info-div">
               <div className="dual-div">
                 <div className="location-div">
                   <p className="location">{city}, {state}</p>
                 </div>
                 <div className="delete-div">
-                  <button onClick={() => this.deleteCard()} className="delete-button">X</button>
+                  <button onClick={() => this.deleteCard()} className="delete-button button"></button>
                 </div>
               </div>
               <div className="condition-div">
@@ -252,11 +255,12 @@ class Card extends Component {
               </div>
             </div>
           </div>
+          <div className="bottom-div">
+            <input onChange={(e) => this.updateCity (e.target.value)} placeholder="City" className="city-input input" />
+            <input onChange={(e) => this.updateState(e.target.value)} placeholder="State" className="state-input input"/>
+            <button onClick={() => this.editCard()} className="edit-button button"></button>
+          </div>
         </div>
-
-        <button onClick={() => this.editCard()} className="edit-button">Edit</button><br/>
-        <input onChange={(e) => this.updateCity (e.target.value)} placeholder="City" className="city-input input" />
-        <input onChange={(e) => this.updateState(e.target.value)} placeholder="State" className="state-input input"/>
 			</div>
     );
   }
