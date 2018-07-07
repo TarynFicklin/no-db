@@ -26,6 +26,7 @@
 	font-size: 75px;
 	padding: 10px 0 0 30px;
 }
+
 .location, .condition {font-size: 25px; text-transform: capitalize;}
 
 .wrapper {display: flex; flex-direction: column; justify-content: space-between; height: 200px;}
@@ -43,8 +44,11 @@ p {
 	margin: 0;
 }
 
-.wrapper input::-webkit-input-placeholder {color: white; opacity: 0.35;}
 .wrapper input::-moz-placeholder {color: white; opacity: 0.35;}
+.wrapper input::-webkit-input-placeholder {color: white; opacity: 0.35;}
+
+.city-input {border-radius: 5px 0px 0px 5px;}
+.state-input {border-radius: 0px 5px 5px 0px;}
 
 .input {
 	background: rgba(255,255,255,.1);
@@ -53,9 +57,6 @@ p {
 	padding: 7px;
 	color: white;
 }
-
-.city-input {border-radius: 5px 0px 0px 5px;}
-.state-input {border-radius: 0px 5px 5px 0px;}
 
 .button {
 	color: inherit;

@@ -35,16 +35,13 @@ class App extends Component {
     }).then(results => this.setState({cardsArr: results.data}))
   }
 
-  change() {
-    axios.put('')
-  }
-
   render() {
     const { cardsArr } = this.state;
     return (
       <div>
         <div className="input-area">
           <input onChange={(e)=>this.getCity(e.target.value)} placeholder="City"/>
+
           <select onChange={(e)=>this.getState(e.target.value)} placeholder="State">
             <option value="" disabled selected>State</option>
             <option value="AL">Alabama</option>
@@ -100,7 +97,6 @@ class App extends Component {
             <option value="WY">Wyoming</option>
           </select>				
 		
-
           <button onClick={()=>this.add()} className="add-button"></button>
         </div>
 
@@ -112,12 +108,10 @@ class App extends Component {
               id={e.id}
               city={e.city}
               state={e.state}
-              updateCardsArr={this.updateCardsArr}
-              />
+              updateCardsArr={this.updateCardsArr} />
             )}
           )}
         </div>
-
       </div>
     );
   }

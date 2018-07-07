@@ -52,7 +52,8 @@ class Card extends Component {
     let city = this.state.editCity;
     let state = this.state.editState;
 
-    axios.get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${city}, ${state}")&format=json`).then((results) => { 
+    axios
+    .get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${city}, ${state}")&format=json`).then((results) => { 
     this.setState({
       temp:       results.data.query.results.channel.item.condition.temp,
       condition:  results.data.query.results.channel.item.condition.text,
@@ -61,17 +62,18 @@ class Card extends Component {
       this.conditionBackground();
     })
 
-    axios.put(`/api/cards/${this.props.id}`,
+    axios
+    .put(`/api/cards/${this.props.id}`,
     {
       city: city,
       state: state,
       temp: this.state.temp,
       condition: this.state.condition
     })
-  .then((results) => {
-    this.conditionBackground();
-    return this.props.updateCardsArr(results.data);
-  })
+    .then((results) => {
+        this.conditionBackground();
+        return this.props.updateCardsArr(results.data);
+        })
 
   }
 
@@ -236,7 +238,7 @@ class Card extends Component {
     let { temp, condition } = this.state;
 
     return (
-			<div id="card" style={{backgroundImage: `url(${this.state.background})`}}>
+	<div id="card" style={{backgroundImage: `url(${this.state.background})`}}>
         <div className="wrapper">
           <div className="top-div">
             <div className="temp-div">
@@ -262,7 +264,7 @@ class Card extends Component {
             <button onClick={() => this.editCard()} className="edit-button button"></button>
           </div>
         </div>
-			</div>
+	</div>
     );
   }
 }
