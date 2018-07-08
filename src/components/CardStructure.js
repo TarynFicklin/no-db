@@ -15,6 +15,8 @@ export default function CardStructure(props) {
         updateState,
         editCard,
         deleteCard,
+        updateCardsArr,
+        conditionBackground
     } = props;
 
     return (
@@ -41,7 +43,7 @@ export default function CardStructure(props) {
                 <div className="bottom-div">
                     <input onChange={(e) => updateCity (e.target.value)} placeholder="City" className="city-input input" />
                     <input onChange={(e) => updateState(e.target.value)} placeholder="State" className="state-input input"/>
-                    <button onClick={() => editCard()} className="edit-button button"></button>
+                    <button onClick={()  => editCard()} className="edit-button button"></button>
                 </div>
             </div>
         </div>

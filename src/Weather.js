@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Card from './components/Card'
-import CitySelector from './components/CitySelector'
-import StateSelector from './components/StateSelector'
+import Card from './components/Card';
+import AddButton from './components/AddButton';
+import CitySelector from './components/CitySelector';
+import StateSelector from './components/StateSelector';
 
 import './Weather.css';
 
@@ -16,6 +17,7 @@ class Weather extends Component {
       cardsArr : [],
     };
 
+    this.add            = this.add.bind(this);
     this.getCity        = this.getCity.bind(this);
     this.getState       = this.getState.bind(this);
     this.updateCardsArr = this.updateCardsArr.bind(this);
@@ -25,10 +27,9 @@ class Weather extends Component {
     axios.get('/api/cards').then(results => this.setState({cardsArr: results.data}))
   }
 
-  getCity (val)        {this.setState({city     : val})}
-  getState(val)        {this.setState({state    : val})}
+  getCity        (val) {this.setState({city     : val})}
+  getState       (val) {this.setState({state    : val})}
   updateCardsArr (val) {this.setState({cardsArr : val})}
-
   add() {
     axios
       .post('/api/cards', {
@@ -43,9 +44,9 @@ class Weather extends Component {
     return (
       <div>
         <div className="input-bar">
-          <CitySelector  getCity =  { this.getCity  } />
+          <CitySelector  getCity  = { this.getCity } />
           <StateSelector getState = { this.getState } />
-          <button onClick={()=>this.add()} className="add-button"></button>
+          <AddButton     add      = { this.add } />
         </div>
 
         <div className="card-field">
