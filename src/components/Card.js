@@ -1,7 +1,8 @@
+//node modules
 import React, { Component } from 'react';
-import './Card.css';
 import axios from 'axios';
 
+//background images
 import drizzle      from '../images/drizzle.png'
 import foggy        from '../images/foggy.png'
 import hot          from '../images/hot.png'
@@ -16,72 +17,87 @@ import stormy       from '../images/stormy.png'
 import sunny        from '../images/sunny.png'
 import windy        from '../images/windy.png'
 
+//dependencies
+import './Card.css';
+import CardStructure from './CardStructure';
+
 class Card extends Component {
   constructor() {
     super();
 
     this.state = {
       temp       : '72',
-      condition  : 'meteorite',
+      condition  : 'meteorites',
       editCity   : 'provo',
       editState  : 'ut',
       code       : '3200',
       background : 'sky'
     };
+
+    //binding functions to pass down to CardStructure
+    this.deleteCard  = this.deleteCard.bind(this);
+    this.editCard    = this.editCard.bind(this);
+    this.updateState = this.updateState.bind(this);
+    this.updateCity  = this.updateCity.bind(this);
   }
 
   componentDidMount() {
 
     this.conditionBackground();
-    axios.get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${this.props.city}, ${this.props.state}")&format=json`).then((results) => {
-      this.setState({
-      temp:       results.data.query.results.channel.item.condition.temp,
-      condition:  results.data.query.results.channel.item.condition.text,
-      code:       results.data.query.results.channel.item.condition.code
-      })
-      this.conditionBackground();
-    })
+
+    // axios
+    //   .get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${this.props.city}, ${this.props.state}")&format=json`)
+    //   .then((results) => {
+    //       this.setState({
+    //       temp:       results.data.query.results.channel.item.condition.temp,
+    //       condition:  results.data.query.results.channel.item.condition.text,
+    //       code:       results.data.query.results.channel.item.condition.code
+    //       })
+    //   this.conditionBackground();
+    //   })
 
   }
 
   deleteCard() {
-    axios.delete(`/api/cards/${this.props.id}`).then((results) => this.props.updateCardsArr(results.data))
+    axios
+      .delete(`/api/cards/${this.props.id}`)
+      .then((results) => this.props.updateCardsArr(results.data))
   }
 
   editCard() {
-    let city = this.state.editCity;
-    let state = this.state.editState;
+    let { city, state } = this.state;
 
     axios
-    .get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${city}, ${state}")&format=json`).then((results) => { 
-    this.setState({
-      temp:       results.data.query.results.channel.item.condition.temp,
-      condition:  results.data.query.results.channel.item.condition.text,
-      code:       results.data.query.results.channel.item.condition.code
+      .get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${city}, ${state}")&format=json`)
+      .then((results) => { 
+          this.setState({
+          temp:       results.data.query.results.channel.item.condition.temp,
+          condition:  results.data.query.results.channel.item.condition.text,
+          code:       results.data.query.results.channel.item.condition.code
+          })
+          this.conditionBackground();
       })
-      this.conditionBackground();
-    })
 
-    axios
-    .put(`/api/cards/${this.props.id}`,
-    {
-      city: city,
-      state: state,
-      temp: this.state.temp,
-      condition: this.state.condition
-    })
-    .then((results) => {
-        this.conditionBackground();
-        return this.props.updateCardsArr(results.data);
-        })
+    // axios
+    //   .put(`/api/cards/${this.props.id}`,
+    //   {
+    //     city: city,
+    //     state: state,
+    //     temp: this.state.temp,
+    //     condition: this.state.condition
+    //   })
+    //   .then((results) => {
+    //       this.conditionBackground();
+    //       return this.props.updateCardsArr(results.data);
+    //   })
 
   }
 
-  updateCity  (val) {this.setState({editCity:  val})}
-  updateState (val) {this.setState({editState: val})}
+  updateCity  (val) { this.setState({editCity:  val}) }
+  updateState (val) { this.setState({editState: val}) }
 
   conditionBackground() {
-    let {code} = this.state;
+    let { code } = this.state;
 
     switch(code) {
       case '0':
@@ -234,37 +250,32 @@ class Card extends Component {
   }
 
   render() {
-    let { city, state } = this.props;
-    let { temp, condition } = this.state;
+    let { city, state, id } = this.props;
+    let { temp, condition, editCity, editState, code, background } = this.state;
 
     return (
-	<div id="card" style={{backgroundImage: `url(${this.state.background})`}}>
-        <div className="wrapper">
-          <div className="top-div">
-            <div className="temp-div">
-              <p className="temp">{temp}°</p>
-            </div>
-            <div className="info-div">
-              <div className="dual-div">
-                <div className="location-div">
-                  <p className="location">{city}, {state}</p>
-                </div>
-                <div className="delete-div">
-                  <button onClick={() => this.deleteCard()} className="delete-button button"></button>
-                </div>
-              </div>
-              <div className="condition-div">
-                <p className="condition">{condition}</p>
-              </div>
-            </div>
-          </div>
-          <div className="bottom-div">
-            <input onChange={(e) => this.updateCity (e.target.value)} placeholder="City" className="city-input input" />
-            <input onChange={(e) => this.updateState(e.target.value)} placeholder="State" className="state-input input"/>
-            <button onClick={() => this.editCard()} className="edit-button button"></button>
-          </div>
-        </div>
-	</div>
+      <div>
+        <CardStructure 
+          //props
+          id          = { id }
+          city        = { city }
+          state       = { state }
+
+          //state
+          code        = { code }
+          temp        = { temp }
+          condition   = { condition }
+          editCity    = { editState }
+          editState   = { editState }
+          background  = { background }
+
+          //functions
+          editCard    = { this.editCard }
+          deleteCard  = { this.deleteCard }
+          updateCity  = { this.updateCity }
+          updateState = { this.updateState }
+          />
+      </div>
     );
   }
 }
