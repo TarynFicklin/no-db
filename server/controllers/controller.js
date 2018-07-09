@@ -62,7 +62,7 @@ module.exports = {
 		cardIndex=cardsArr.findIndex(val => val.id == deleteID);
 
 		//removing the card from the array
-		cardsArr.splice(cardIndex,1);
+		cardsArr.splice(cardIndex, 1);
 
 		//returning to the user
 		// res.status(200).send("Deleted Card. \n" + JSON.stringify(cardsArr));

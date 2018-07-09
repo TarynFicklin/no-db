@@ -1,22 +1,26 @@
+//node modules
 import React, { Component } from 'react';
 import axios from 'axios';
-import Card from './components/Card';
-import AddButton from './components/AddButton';
-import CitySelector from './components/CitySelector';
-import StateSelector from './components/StateSelector';
 
+//dependencies
+import Card          from './cards/Card';
+import AddButton     from './inputs/AddButton';
+import CitySelector  from './inputs/CitySelector';
+import StateSelector from './inputs/StateSelector';
 import './Weather.css';
 
 class Weather extends Component {
   constructor() {
     super();
 
+    //the default value for the cards when created
     this.state = {
       city     : 'provo',
       state    : 'ut',
       cardsArr : [],
     };
 
+    //binds the methods to pass down to Card.js
     this.add            = this.add.bind(this);
     this.getCity        = this.getCity.bind(this);
     this.getState       = this.getState.bind(this);
@@ -24,12 +28,16 @@ class Weather extends Component {
   }
   
   componentDidMount() {
+    //gets data from local server
     axios.get('/api/cards').then(results => this.setState({cardsArr: results.data}))
   }
 
+  //captures the user's input for adding a new card
   getCity        (val) {this.setState({city     : val})}
   getState       (val) {this.setState({state    : val})}
   updateCardsArr (val) {this.setState({cardsArr : val})}
+
+  //creates a new card
   add() {
     axios
       .post('/api/cards', {
@@ -41,12 +49,13 @@ class Weather extends Component {
 
   render() {
     const { cardsArr } = this.state;
+    
     return (
       <div>
         <div className="input-bar">
-          <CitySelector  getCity  = { this.getCity } />
+          <CitySelector getCity = { this.getCity } />
           <StateSelector getState = { this.getState } />
-          <AddButton     add      = { this.add } />
+          <AddButton add = { this.add } />
         </div>
 
         <div className="card-field">

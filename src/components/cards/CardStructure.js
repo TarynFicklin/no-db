@@ -7,16 +7,11 @@ export default function CardStructure(props) {
         id,
         temp,
         condition,
-        editCity,
-        editState,
-        code,
         background,
         updateCity,
         updateState,
         editCard,
         deleteCard,
-        updateCardsArr,
-        conditionBackground
     } = props;
 
     return (

@@ -3,19 +3,19 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 //background images
-import drizzle      from '../images/drizzle.png'
-import foggy        from '../images/foggy.png'
-import hot          from '../images/hot.png'
-import meteorite    from '../images/meteorite.png'
-import mostlyClear  from '../images/mostly-clear.png'
-import mostlyCloudy from '../images/mostly-cloudy.png'
-import partlyCloudy from '../images/partly-cloudy.png'
-import raining      from '../images/raining.png'
-import sky          from '../images/sky.png'
-import snowy        from '../images/snowy.png'
-import stormy       from '../images/stormy.png'
-import sunny        from '../images/sunny.png'
-import windy        from '../images/windy.png'
+import drizzle      from '../resources/drizzle.png'
+import foggy        from '../resources/foggy.png'
+import hot          from '../resources/hot.png'
+import meteorite    from '../resources/meteorite.png'
+import mostlyClear  from '../resources/mostly-clear.png'
+import mostlyCloudy from '../resources/mostly-cloudy.png'
+import partlyCloudy from '../resources/partly-cloudy.png'
+import raining      from '../resources/raining.png'
+import sky          from '../resources/sky.png'
+import snowy        from '../resources/snowy.png'
+import stormy       from '../resources/stormy.png'
+import sunny        from '../resources/sunny.png'
+import windy        from '../resources/windy.png'
 
 //dependencies
 import './Card.css';
@@ -25,6 +25,7 @@ class Card extends Component {
   constructor() {
     super();
 
+		//card's default values
     this.state = {
       temp       : '72',
       condition  : 'meteorites',
@@ -45,6 +46,7 @@ class Card extends Component {
 
     this.conditionBackground();
 
+	//getting data from Yahoo Weather API
     axios
     .get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${this.props.city}, ${this.props.state}")&format=json`)
     .then((results) => {
@@ -58,17 +60,21 @@ class Card extends Component {
 
   }
 
+  //deletes the current weather card
   deleteCard() {
     axios
       .delete(`/api/cards/${this.props.id}`)
       .then((results) => this.props.updateCardsArr(results.data))
   }
 
+  //edits the current card
   editCard() {
-    let city = this.state.editCity;
+		let city = this.state.editCity;
     let state = this.state.editState;
+
     this.conditionBackground();
-    
+		
+	//gets the information from Yahoo Weather API to update the current card's background
     axios
       .get(`https://query.yahooapis.com/v1/public/yql?q=select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="${city}, ${state}")&format=json`)
       .then((results) => { 
@@ -80,6 +86,7 @@ class Card extends Component {
           this.conditionBackground();
       })
 
+	//updates the information of the current card
     axios
       .put(`/api/cards/${this.props.id}`,
       {
@@ -94,9 +101,11 @@ class Card extends Component {
       })
     }
 
+  //captures the user's input
   updateCity  (val) { this.setState({editCity:  val}) }
   updateState (val) { this.setState({editState: val}) }
 
+  //finds what weather condition the card has and updates the background accordingly
   conditionBackground() {
     let { code } = this.state;
 
@@ -252,7 +261,7 @@ class Card extends Component {
 
   render() {
     let { city, state, id } = this.props;
-    let { temp, condition, editCity, editState, code, background } = this.state;
+    let { temp, condition, background } = this.state;
 
     return (
     <div>
@@ -263,11 +272,8 @@ class Card extends Component {
         state       = { state }
 
         //state
-        code        = { code }
         temp        = { temp }
         condition   = { condition }
-        editCity    = { editCity }
-        editState   = { editState }
         background  = { background }
 
         //functions

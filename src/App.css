@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900');
 
+* {box-sizing: border-box}
+
 body {
-  background: url('./images/background.jpg') no-repeat fixed top center;
+  background: url('components/resources/background.jpg') no-repeat fixed top center;
   background-size: cover;
   font-family: 'Muli', sans-serif;
 }
+
+input, button, select {outline: none;}
